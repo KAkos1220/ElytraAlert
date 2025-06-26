@@ -1,0 +1,14 @@
+{
+  "config.title": "Elytra Warning Config",
+  "config.isModDisabled": "Disable Mod",
+  "config.isFlashingOn": "Flashing Icon",
+  "config.isDamageWarningOn": "Durability Warning",
+  "config.isDamageWarningOn.tooltip": "Warns when the Elytra's durability is below the given percent.",
+  "config.elytraDurabilityThreshold": "Warning threshold",
+  "config.elytraDurabilityThreshold.tooltip": "Only gives warning below this percent.",
+  "config.considerUnbreaking": "Consider Unbreaking Enchantment",
+  "config.on": "On",
+  "config.off": "Off",
+  "config.worlds": "Worlds",
+  "config.servers": "Servers"
+}
