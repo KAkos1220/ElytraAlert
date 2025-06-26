@@ -9,7 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.world.World;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.world.GameMode;
 
 public class ElytraChecker {
