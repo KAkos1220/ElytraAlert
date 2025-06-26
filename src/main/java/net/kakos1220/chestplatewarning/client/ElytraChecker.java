@@ -9,6 +9,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.world.World;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.world.GameMode;
 
 public class ElytraChecker {
 
@@ -16,7 +18,11 @@ public class ElytraChecker {
 
     public static void checkPlayerState() {
         MinecraftClient client = MinecraftClient.getInstance();
-        if (client.player == null || client.world == null) {
+        if (client.player == null || client.interactionManager == null || client.world == null) {
+            return;
+        }
+
+        if (client.interactionManager.getCurrentGameMode() != GameMode.SURVIVAL) {
             caution = false;
             return;
         }
