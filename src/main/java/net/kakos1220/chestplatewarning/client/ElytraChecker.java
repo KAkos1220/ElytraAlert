@@ -1,6 +1,9 @@
 package net.kakos1220.chestplatewarning.client;
 
 import net.kakos1220.chestplatewarning.ChestplateWarning;
+import net.minecraft.advancement.Advancement;
+import net.minecraft.advancement.AdvancementEntry;
+import net.minecraft.advancement.AdvancementProgress;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
@@ -8,12 +11,16 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import net.minecraft.world.GameMode;
 
 public class ElytraChecker {
 
     public static boolean caution = false;
+    public static boolean noElytra = true;
 
     public static void checkPlayerState() {
         MinecraftClient client = MinecraftClient.getInstance();
@@ -22,6 +29,11 @@ public class ElytraChecker {
         }
 
         if (client.interactionManager.getCurrentGameMode() != GameMode.SURVIVAL) {
+            caution = false;
+            return;
+        }
+
+        if (noElytra) {
             caution = false;
             return;
         }
@@ -61,5 +73,20 @@ public class ElytraChecker {
         else {
             caution = inEnd && noElytra;
         }
+    }
+
+    public static boolean hasAdvancement(ServerPlayerEntity player, String path) {
+        MinecraftServer server = player.getServer();
+        if (server == null) return false;
+
+        Identifier advancementId = Identifier.of(path);
+        AdvancementEntry entry = server.getAdvancementLoader().get(advancementId);
+
+        if (entry == null) return false;
+
+        Advancement advancement = entry.value();
+        AdvancementProgress progress = player.getAdvancementTracker().getProgress(entry);
+
+        return progress.isDone();
     }
 }
