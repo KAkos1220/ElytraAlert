@@ -31,7 +31,9 @@ public class ChestplateWarning implements ModInitializer {
 	public static boolean isFlashingOn = true;
 	public static boolean isDamageWarningOn = true;
 	public static int elytraDurabilityThreshold = 10;
+	public static boolean considerGameMode = true;
 	public static boolean considerUnbreaking = true;
+	public static boolean considerAdvancement = true;
 
 	public static final Map<String, Boolean> worldToggles = new HashMap<>();
 	public static boolean isCurrentWorldDisabled = false;
@@ -58,7 +60,9 @@ public class ChestplateWarning implements ModInitializer {
 			isFlashingOn = Boolean.parseBoolean(cfg.getProperty("isFlashingOn", "true"));
 			isDamageWarningOn = Boolean.parseBoolean(cfg.getProperty("isDamageWarningOn", "true"));
 			elytraDurabilityThreshold = Integer.parseInt(cfg.getProperty("elytraDurabilityThreshold", "10"));
+			considerGameMode = Boolean.parseBoolean(cfg.getProperty("considerGameMode", "true"));
 			considerUnbreaking = Boolean.parseBoolean(cfg.getProperty("considerUnbreaking", "true"));
+			considerAdvancement = Boolean.parseBoolean(cfg.getProperty("considerAdvancement", "true"));
 
 			for (String prop : cfg.stringPropertyNames()) {
 				if (prop.startsWith("world.")) {
@@ -84,7 +88,9 @@ public class ChestplateWarning implements ModInitializer {
 			fos.write(("isFlashingOn=" + isFlashingOn + "\n").getBytes());
 			fos.write(("isDamageWarningOn=" + isDamageWarningOn + "\n").getBytes());
 			fos.write(("elytraDurabilityThreshold=" + elytraDurabilityThreshold + "\n").getBytes());
+			fos.write(("considerGameMode=" + considerGameMode + "\n").getBytes());
 			fos.write(("considerUnbreaking=" + considerUnbreaking + "\n").getBytes());
+			fos.write(("considerAdvancement=" + considerAdvancement + "\n").getBytes());
 
 			for (var e : worldToggles.entrySet()) {
 				fos.write(("world."  + e.getKey() + "=" + e.getValue() + "\n").getBytes());

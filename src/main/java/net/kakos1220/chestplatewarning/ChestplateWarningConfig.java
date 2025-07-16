@@ -83,6 +83,19 @@ public class ChestplateWarningConfig implements ModMenuApi, ConfigScreenFactory<
 
         general.addEntry(entryBuilder
                 .startBooleanToggle(
+                        Text.translatable("config.considerGameMode"), ChestplateWarning.considerGameMode
+                )
+                .setTooltip(Text.translatable("config.considerGameMode.tooltip"))
+                .setDefaultValue(true)
+                .setYesNoTextSupplier(value -> value
+                        ? Text.translatable("config.on").formatted(Formatting.GREEN)
+                        : Text.translatable("config.off").formatted(Formatting.RED)
+                )
+                .setSaveConsumer((value) -> ChestplateWarning.considerGameMode = value)
+                .build());
+
+        general.addEntry(entryBuilder
+                .startBooleanToggle(
                         Text.translatable("config.considerUnbreaking"), ChestplateWarning.considerUnbreaking
                 )
                 .setDefaultValue(true)
@@ -91,6 +104,19 @@ public class ChestplateWarningConfig implements ModMenuApi, ConfigScreenFactory<
                         : Text.translatable("config.off").formatted(Formatting.RED)
                 )
                 .setSaveConsumer((value) -> ChestplateWarning.considerUnbreaking = value)
+                .build());
+
+        general.addEntry(entryBuilder
+                .startBooleanToggle(
+                        Text.translatable("config.considerAdvancement"), ChestplateWarning.considerAdvancement
+                )
+                .setTooltip(Text.translatable("config.considerAdvancement.tooltip"))
+                .setDefaultValue(true)
+                .setYesNoTextSupplier(value -> value
+                        ? Text.translatable("config.on").formatted(Formatting.GREEN)
+                        : Text.translatable("config.off").formatted(Formatting.RED)
+                )
+                .setSaveConsumer((value) -> ChestplateWarning.considerAdvancement = value)
                 .build());
 
 
