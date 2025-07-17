@@ -11,7 +11,7 @@ public class ChestplateWarningClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            ElytraChecker.noElytra = !ElytraChecker.hasAdvancement("minecraft:end/elytra");
+            ElytraChecker.noAdvancement = !ElytraChecker.hasAdvancement("minecraft:end/elytra");
 
             ElytraChecker.checkPlayerState();
 

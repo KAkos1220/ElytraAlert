@@ -22,7 +22,7 @@ import java.util.Map;
 public class ElytraChecker {
 
     public static boolean caution = false;
-    public static boolean noElytra = false;
+    public static boolean noAdvancement = false;
 
     public static void checkPlayerState() {
         MinecraftClient client = MinecraftClient.getInstance();
@@ -35,7 +35,7 @@ public class ElytraChecker {
             return;
         }
 
-        if (noElytra && ChestplateWarning.considerAdvancement) {
+        if (noAdvancement && ChestplateWarning.considerAdvancement) {
             caution = false;
             return;
         }
