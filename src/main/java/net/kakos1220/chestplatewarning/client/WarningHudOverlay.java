@@ -3,6 +3,7 @@ package net.kakos1220.chestplatewarning.client;
 import net.kakos1220.chestplatewarning.ChestplateWarning;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.util.Identifier;
 
@@ -28,10 +29,11 @@ public class WarningHudOverlay{
                     int y = 10;
 
                     context.drawTexture(
+                            RenderLayer::getGuiTextured,
                             WARNING,
                             x, y,
-                            42, 36,
                             0, 0,
+                            42, 36,
                             42, 36,
                             42, 36
                     );
@@ -43,10 +45,11 @@ public class WarningHudOverlay{
                 int y = 10;
 
                 context.drawTexture(
+                        RenderLayer::getGuiTextured,
                         WARNING,
                         x, y,
-                        42, 36,
                         0, 0,
+                        42, 36,
                         42, 36,
                         42, 36
                 );

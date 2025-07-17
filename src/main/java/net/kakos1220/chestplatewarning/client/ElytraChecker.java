@@ -45,7 +45,7 @@ public class ElytraChecker {
         boolean inEnd = client.world.getRegistryKey() == World.END;
         boolean isElytraDamaged = false;
         if (chestSlot.isOf(Items.ELYTRA)) {
-            var unbreaking = client.world.getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(Enchantments.UNBREAKING).get();
+            var unbreaking = client.world.getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(Enchantments.UNBREAKING);
             int unbreakingLevel = EnchantmentHelper.getLevel(unbreaking, chestSlot);
             int durabilityMultiplier = 1;
 
