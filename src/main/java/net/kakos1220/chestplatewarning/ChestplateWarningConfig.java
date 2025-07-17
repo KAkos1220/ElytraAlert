@@ -9,6 +9,7 @@ import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.text.Text;
@@ -164,8 +165,8 @@ public class ChestplateWarningConfig implements ModMenuApi, ConfigScreenFactory<
 
                     for (int i = 0; i < servers.size(); i++) {
                         NbtCompound srv = (NbtCompound) servers.get(i);
-                        String name = srv.getString("name").orElse("Unnamed");
-                        String ip   = srv.getString("ip").orElse("0.0.0.0");
+                        String name = srv.contains("name", NbtElement.STRING_TYPE) ? srv.getString("name") : "Unnamed";
+                        String ip   = srv.contains("ip", NbtElement.STRING_TYPE) ? srv.getString("ip") : "0.0.0.0";
 
                         String key = ChestplateWarning.key(name + "_" + ip);
                         ChestplateWarning.serverToggles.putIfAbsent(key, true);

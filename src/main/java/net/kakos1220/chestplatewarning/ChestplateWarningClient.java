@@ -2,8 +2,7 @@ package net.kakos1220.chestplatewarning;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.rendering.v1.HudLayerRegistrationCallback;
-import net.fabricmc.fabric.api.client.rendering.v1.IdentifiedLayer;
+import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.kakos1220.chestplatewarning.client.ElytraChecker;
 import net.kakos1220.chestplatewarning.client.WarningHudOverlay;
 
@@ -11,7 +10,7 @@ public class ChestplateWarningClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            ElytraChecker.noElytra = !ElytraChecker.hasAdvancement("minecraft:end/elytra");
+            ElytraChecker.noAdvancement = !ElytraChecker.hasAdvancement("minecraft:end/elytra");
 
             ElytraChecker.checkPlayerState();
 
@@ -34,7 +33,9 @@ public class ChestplateWarningClient implements ClientModInitializer {
             }
         });
 
-        HudLayerRegistrationCallback.EVENT.register(layeredDrawer ->
-            layeredDrawer.attachLayerBefore(IdentifiedLayer.CHAT, WarningHudOverlay.WARNING, WarningHudOverlay::render));
+
+        HudRenderCallback.EVENT.register((drawContext, tickDelta) -> {
+            WarningHudOverlay.render(drawContext, tickDelta);
+        });
     }
 }

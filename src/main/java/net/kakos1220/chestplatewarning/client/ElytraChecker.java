@@ -22,7 +22,7 @@ import java.util.Map;
 public class ElytraChecker {
 
     public static boolean caution = false;
-    public static boolean noElytra = false;
+    public static boolean noAdvancement = false;
 
     public static void checkPlayerState() {
         MinecraftClient client = MinecraftClient.getInstance();
@@ -35,7 +35,7 @@ public class ElytraChecker {
             return;
         }
 
-        if (noElytra && ChestplateWarning.considerAdvancement) {
+        if (noAdvancement && ChestplateWarning.considerAdvancement) {
             caution = false;
             return;
         }
@@ -45,7 +45,7 @@ public class ElytraChecker {
         boolean inEnd = client.world.getRegistryKey() == World.END;
         boolean isElytraDamaged = false;
         if (chestSlot.isOf(Items.ELYTRA)) {
-            var unbreaking = client.world.getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(Enchantments.UNBREAKING);
+            var unbreaking = client.world.getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(Enchantments.UNBREAKING).get();
             int unbreakingLevel = EnchantmentHelper.getLevel(unbreaking, chestSlot);
             int durabilityMultiplier = 1;
 
