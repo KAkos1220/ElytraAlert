@@ -2,8 +2,8 @@ package net.kakos1220.chestplatewarning;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.rendering.v1.HudLayerRegistrationCallback;
-import net.fabricmc.fabric.api.client.rendering.v1.IdentifiedLayer;
+import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
 import net.kakos1220.chestplatewarning.client.ElytraChecker;
 import net.kakos1220.chestplatewarning.client.WarningHudOverlay;
 
@@ -34,7 +34,10 @@ public class ChestplateWarningClient implements ClientModInitializer {
             }
         });
 
-        HudLayerRegistrationCallback.EVENT.register(layeredDrawer ->
-            layeredDrawer.attachLayerBefore(IdentifiedLayer.CHAT, WarningHudOverlay.WARNING, WarningHudOverlay::render));
+        HudElementRegistry.attachElementBefore(
+                VanillaHudElements.CHAT,
+                WarningHudOverlay.WARNING,
+                WarningHudOverlay::render
+        );
     }
 }
