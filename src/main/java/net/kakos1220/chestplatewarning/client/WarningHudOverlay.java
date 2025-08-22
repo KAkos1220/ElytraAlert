@@ -7,7 +7,7 @@ import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.util.Identifier;
 
 public class WarningHudOverlay{
-    public static final Identifier WARNING = Identifier.of(ChestplateWarning.MOD_ID, "textures/elytrawarning.png");
+    public static final Identifier WARNING = Identifier.of(ChestplateWarning.MOD_ID, "textures/elytraalert.png");
 
     public static void render(DrawContext context, RenderTickCounter tickCounter) {
         MinecraftClient client = MinecraftClient.getInstance();
