@@ -2,16 +2,17 @@
 	"schemaVersion": 1,
 	"id": "chestplatewarning",
 	"version": "${version}",
-	"name": "ChestplateWarning",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"name": "ElytraAlert",
+	"description": "Alerts the player when the elytra isn't equipped in the end.",
 	"authors": [
-		"Me!"
+		"KAkos1220"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://modrinth.com/mod/elytra-alert",
+		"sources": "https://github.com/KAkos1220/ElytraAlert",
+		"issues": "https://github.com/KAkos1220/ElytraAlert/issues"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/chestplatewarning/icon.png",
 	"environment": "*",
 	"entrypoints": {
@@ -27,11 +28,8 @@
 	},
 	"depends": {
 		"fabricloader": ">=0.16.14",
-		"minecraft": "~1.21",
+		"minecraft": "1.21.5",
 		"java": ">=21",
 		"fabric-api": "*"
-	},
-	"suggests": {
-		"another-mod": "*"
 	}
 }
