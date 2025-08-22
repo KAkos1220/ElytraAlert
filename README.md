@@ -11,6 +11,6 @@ This mod is a lightweight QoL mod that warns the player when the elytra isn't eq
 
 ---
 ## ⚙️ Compatibility
-- The mod works in 1.21+, and I have no plans to make it available for earlier versions.
+- The mod works in 1.21+, and I have no plans to make it available for earlier versions
 - Requies [Fabric API](https://modrinth.com/mod/fabric-api)
-- Install [Mod Menu](https://modrinth.com/mod/modmenu) and [Cloth Config](https://modrinth.com/mod/cloth-config) to access the config menu.
+- Install [Mod Menu](https://modrinth.com/mod/modmenu) and [Cloth Config](https://modrinth.com/mod/cloth-config) to access the config menu
