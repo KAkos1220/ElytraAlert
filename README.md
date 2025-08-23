@@ -3,7 +3,7 @@
 This mod is a lightweight QoL mod that warns the player when the elytra isn't equipped in the end dimension.
 
 ---
-  ## ✨ Features
+## ✨ Features
 - Takes your current **Game Mode** into account before showing alerts
 - Alerts you not only when no Elytra is equipped, but also when your Elytra has **low durability**
 - Durability checks **factor in the Unbreaking enchantment**, giving more accurate warnings
