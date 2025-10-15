@@ -30,7 +30,7 @@ dependencies {
 	}
 
 	// Mod Menu
-	modApi "com.terraformersmc:modmenu:${mod_menu}"
+	modApi "com.terraformersmc:modmenu:${modmenu_version}"
 }
 
 processResources {
