@@ -7,13 +7,12 @@ import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtIo;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-
+import net.minecraft.network.chat.Component;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -32,15 +31,15 @@ public class ChestplateWarningConfig implements ModMenuApi, ConfigScreenFactory<
     public Screen create(Screen screen) {
         ConfigBuilder builder = ConfigBuilder.create()
                 .setParentScreen(screen)
-                .setTitle(Text.translatable("config.title"));
+                .setTitle(Component.translatable("config.title"));
 
         ConfigEntryBuilder entryBuilder = builder.entryBuilder();
-        ConfigCategory general = builder.getOrCreateCategory(Text.literal("General"));
+        ConfigCategory general = builder.getOrCreateCategory(Component.literal("General"));
 
 
         general.addEntry(entryBuilder
                 .startBooleanToggle(
-                        Text.translatable("config.isModDisabled"), ChestplateWarning.isModDisabled
+                        Component.translatable("config.isModDisabled"), ChestplateWarning.isModDisabled
                 )
                 .setDefaultValue(false)
                 .setSaveConsumer((value) -> ChestplateWarning.isModDisabled = value)
@@ -48,73 +47,73 @@ public class ChestplateWarningConfig implements ModMenuApi, ConfigScreenFactory<
 
         general.addEntry(entryBuilder
                 .startBooleanToggle(
-                        Text.translatable("config.isFlashingOn"), ChestplateWarning.isFlashingOn
+                        Component.translatable("config.isFlashingOn"), ChestplateWarning.isFlashingOn
                 )
                 .setDefaultValue(true)
                 .setYesNoTextSupplier(value -> value
-                        ? Text.translatable("config.on").formatted(Formatting.GREEN)
-                        : Text.translatable("config.off").formatted(Formatting.RED)
+                        ? Component.translatable("config.on").withStyle(ChatFormatting.GREEN)
+                        : Component.translatable("config.off").withStyle(ChatFormatting.RED)
                 )
                 .setSaveConsumer((value) -> ChestplateWarning.isFlashingOn = value)
                 .build());
 
         general.addEntry(entryBuilder
                 .startBooleanToggle(
-                        Text.translatable("config.isDamageWarningOn"), ChestplateWarning.isDamageWarningOn
+                        Component.translatable("config.isDamageWarningOn"), ChestplateWarning.isDamageWarningOn
                 )
-                .setTooltip(Text.translatable("config.isDamageWarningOn.tooltip"))
+                .setTooltip(Component.translatable("config.isDamageWarningOn.tooltip"))
                 .setDefaultValue(true)
                 .setYesNoTextSupplier(value -> value
-                        ? Text.translatable("config.on").formatted(Formatting.GREEN)
-                        : Text.translatable("config.off").formatted(Formatting.RED)
+                        ? Component.translatable("config.on").withStyle(ChatFormatting.GREEN)
+                        : Component.translatable("config.off").withStyle(ChatFormatting.RED)
                 )
                 .setSaveConsumer((value) -> ChestplateWarning.isDamageWarningOn = value)
                 .build());
 
         general.addEntry(entryBuilder
                 .startIntSlider(
-                        Text.translatable("config.elytraDurabilityThreshold"), ChestplateWarning.elytraDurabilityThreshold, 5, 50
+                        Component.translatable("config.elytraDurabilityThreshold"), ChestplateWarning.elytraDurabilityThreshold, 5, 50
                 )
-                .setTooltip(Text.translatable("config.elytraDurabilityThreshold.tooltip"))
+                .setTooltip(Component.translatable("config.elytraDurabilityThreshold.tooltip"))
                 .setDefaultValue(10)
-                .setTextGetter(value -> Text.literal(value + "%"))
+                .setTextGetter(value -> Component.literal(value + "%"))
                 .setSaveConsumer((value) -> ChestplateWarning.elytraDurabilityThreshold = value)
                 .build());
 
         general.addEntry(entryBuilder
                 .startBooleanToggle(
-                        Text.translatable("config.considerUnbreaking"), ChestplateWarning.considerUnbreaking
+                        Component.translatable("config.considerUnbreaking"), ChestplateWarning.considerUnbreaking
                 )
                 .setDefaultValue(true)
                 .setYesNoTextSupplier(value -> value
-                        ? Text.translatable("config.on").formatted(Formatting.GREEN)
-                        : Text.translatable("config.off").formatted(Formatting.RED)
+                        ? Component.translatable("config.on").withStyle(ChatFormatting.GREEN)
+                        : Component.translatable("config.off").withStyle(ChatFormatting.RED)
                 )
                 .setSaveConsumer((value) -> ChestplateWarning.considerUnbreaking = value)
                 .build());
 
         general.addEntry(entryBuilder
                 .startBooleanToggle(
-                        Text.translatable("config.considerGameMode"), ChestplateWarning.considerGameMode
+                        Component.translatable("config.considerGameMode"), ChestplateWarning.considerGameMode
                 )
-                .setTooltip(Text.translatable("config.considerGameMode.tooltip"))
+                .setTooltip(Component.translatable("config.considerGameMode.tooltip"))
                 .setDefaultValue(true)
                 .setYesNoTextSupplier(value -> value
-                        ? Text.translatable("config.on").formatted(Formatting.GREEN)
-                        : Text.translatable("config.off").formatted(Formatting.RED)
+                        ? Component.translatable("config.on").withStyle(ChatFormatting.GREEN)
+                        : Component.translatable("config.off").withStyle(ChatFormatting.RED)
                 )
                 .setSaveConsumer((value) -> ChestplateWarning.considerGameMode = value)
                 .build());
 
         general.addEntry(entryBuilder
                 .startBooleanToggle(
-                        Text.translatable("config.considerAdvancement"), ChestplateWarning.considerAdvancement
+                        Component.translatable("config.considerAdvancement"), ChestplateWarning.considerAdvancement
                 )
-                .setTooltip(Text.translatable("config.considerAdvancement.tooltip"))
+                .setTooltip(Component.translatable("config.considerAdvancement.tooltip"))
                 .setDefaultValue(true)
                 .setYesNoTextSupplier(value -> value
-                        ? Text.translatable("config.on").formatted(Formatting.GREEN)
-                        : Text.translatable("config.off").formatted(Formatting.RED)
+                        ? Component.translatable("config.on").withStyle(ChatFormatting.GREEN)
+                        : Component.translatable("config.off").withStyle(ChatFormatting.RED)
                 )
                 .setSaveConsumer((value) -> ChestplateWarning.considerAdvancement = value)
                 .build());
@@ -131,11 +130,11 @@ public class ChestplateWarningConfig implements ModMenuApi, ConfigScreenFactory<
                     ChestplateWarning.worldToggles.putIfAbsent(key, true);
 
                     worldEntries.add(entryBuilder
-                            .startBooleanToggle(Text.literal(worldName), ChestplateWarning.worldToggles.get(key))
+                            .startBooleanToggle(Component.literal(worldName), ChestplateWarning.worldToggles.get(key))
                             .setDefaultValue(true)
                             .setYesNoTextSupplier(value -> value
-                                    ? Text.translatable("config.on").formatted(Formatting.GREEN)
-                                    : Text.translatable("config.off").formatted(Formatting.RED))
+                                    ? Component.translatable("config.on").withStyle(ChatFormatting.GREEN)
+                                    : Component.translatable("config.off").withStyle(ChatFormatting.RED))
                             .setSaveConsumer(value -> ChestplateWarning.worldToggles.put(key, value))
                             .build());
                 }
@@ -146,7 +145,7 @@ public class ChestplateWarningConfig implements ModMenuApi, ConfigScreenFactory<
 
         if (!worldEntries.isEmpty()) {
             general.addEntry(entryBuilder
-                    .startSubCategory(Text.translatable("config.worlds"), worldEntries)
+                    .startSubCategory(Component.translatable("config.worlds"), worldEntries)
                     .setExpanded(false)
                     .build());
         }
@@ -157,13 +156,13 @@ public class ChestplateWarningConfig implements ModMenuApi, ConfigScreenFactory<
 
         if (Files.exists(serversDat)) {
             try {
-                NbtCompound root = NbtIo.read(serversDat);
+                CompoundTag root = NbtIo.read(serversDat);
 
                 if (root != null && root.contains("servers")) {
-                    NbtList servers = (NbtList) root.get("servers");
+                    ListTag servers = (ListTag) root.get("servers");
 
                     for (int i = 0; i < servers.size(); i++) {
-                        NbtCompound srv = (NbtCompound) servers.get(i);
+                        CompoundTag srv = (CompoundTag) servers.get(i);
                         String name = srv.getString("name").orElse("Unnamed");
                         String ip   = srv.getString("ip").orElse("0.0.0.0");
 
@@ -171,12 +170,12 @@ public class ChestplateWarningConfig implements ModMenuApi, ConfigScreenFactory<
                         ChestplateWarning.serverToggles.putIfAbsent(key, true);
 
                         serverEntries.add(entryBuilder
-                                .startBooleanToggle(Text.literal(name + " (" + ip + ")"),
+                                .startBooleanToggle(Component.literal(name + " (" + ip + ")"),
                                         ChestplateWarning.serverToggles.get(key))
                                 .setDefaultValue(true)
                                 .setYesNoTextSupplier(value -> value
-                                        ? Text.translatable("config.on").formatted(Formatting.GREEN)
-                                        : Text.translatable("config.off").formatted(Formatting.RED))
+                                        ? Component.translatable("config.on").withStyle(ChatFormatting.GREEN)
+                                        : Component.translatable("config.off").withStyle(ChatFormatting.RED))
                                 .setSaveConsumer(value -> ChestplateWarning.serverToggles.put(key, value))
                                 .build());
                     }
@@ -188,7 +187,7 @@ public class ChestplateWarningConfig implements ModMenuApi, ConfigScreenFactory<
 
         if (!serverEntries.isEmpty()) {
             general.addEntry(entryBuilder
-                    .startSubCategory(Text.translatable("config.servers"), serverEntries)
+                    .startSubCategory(Component.translatable("config.servers"), serverEntries)
                     .setExpanded(false)
                     .build());
         }

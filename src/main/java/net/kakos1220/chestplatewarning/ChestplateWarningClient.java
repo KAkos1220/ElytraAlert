@@ -15,8 +15,8 @@ public class ChestplateWarningClient implements ClientModInitializer {
 
             ElytraChecker.checkPlayerState();
 
-            if (client.isIntegratedServerRunning() && client.getServer() != null) {
-                String raw = client.getServer().getSaveProperties().getLevelName();
+            if (client.hasSingleplayerServer() && client.getSingleplayerServer() != null) {
+                String raw = client.getSingleplayerServer().getWorldData().getLevelName();
                 String key = ChestplateWarning.key(raw);
                 ChestplateWarning.isCurrentWorldDisabled =
                         !ChestplateWarning.worldToggles.getOrDefault(key, true);
@@ -24,9 +24,9 @@ public class ChestplateWarningClient implements ClientModInitializer {
                 ChestplateWarning.isCurrentWorldDisabled = false;
             }
 
-            if (!client.isIntegratedServerRunning() && client.getCurrentServerEntry() != null) {
-                var entry = client.getCurrentServerEntry();
-                String key = ChestplateWarning.key(entry.name + "_" + entry.address);
+            if (!client.hasSingleplayerServer() && client.getCurrentServer() != null) {
+                var entry = client.getCurrentServer();
+                String key = ChestplateWarning.key(entry.name + "_" + entry.ip);
                 ChestplateWarning.isCurrentServerDisabled =
                         !ChestplateWarning.serverToggles.getOrDefault(key, true);
             } else {

@@ -1,21 +1,20 @@
 package net.kakos1220.chestplatewarning.client;
 
 import net.kakos1220.chestplatewarning.ChestplateWarning;
-import net.minecraft.advancement.AdvancementEntry;
-import net.minecraft.advancement.AdvancementProgress;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientAdvancementManager;
-import net.minecraft.client.network.ClientPlayNetworkHandler;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
-import net.minecraft.world.GameMode;
-
+import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.advancements.AdvancementProgress;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientAdvancements;
+import net.minecraft.client.multiplayer.ClientPacketListener;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.GameType;
+import net.minecraft.world.level.Level;
 import java.lang.reflect.Field;
 import java.util.Map;
 
@@ -25,12 +24,12 @@ public class ElytraChecker {
     public static boolean noAdvancement = false;
 
     public static void checkPlayerState() {
-        MinecraftClient client = MinecraftClient.getInstance();
-        if (client.player == null || client.interactionManager == null || client.world == null) {
+        Minecraft client = Minecraft.getInstance();
+        if (client.player == null || client.gameMode == null || client.level == null) {
             return;
         }
 
-        if (client.interactionManager.getCurrentGameMode() != GameMode.SURVIVAL && ChestplateWarning.considerGameMode) {
+        if (client.gameMode.getPlayerMode() != GameType.SURVIVAL && ChestplateWarning.considerGameMode) {
             caution = false;
             return;
         }
@@ -40,13 +39,13 @@ public class ElytraChecker {
             return;
         }
 
-        ItemStack chestSlot = client.player.getEquippedStack(EquipmentSlot.CHEST);
-        boolean noElytra = !chestSlot.isOf(Items.ELYTRA);
-        boolean inEnd = client.world.getRegistryKey() == World.END;
+        ItemStack chestSlot = client.player.getItemBySlot(EquipmentSlot.CHEST);
+        boolean noElytra = !chestSlot.is(Items.ELYTRA);
+        boolean inEnd = client.level.dimension() == Level.END;
         boolean isElytraDamaged = false;
-        if (chestSlot.isOf(Items.ELYTRA)) {
-            var unbreaking = client.world.getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(Enchantments.UNBREAKING);
-            int unbreakingLevel = EnchantmentHelper.getLevel(unbreaking, chestSlot);
+        if (chestSlot.is(Items.ELYTRA)) {
+            var unbreaking = client.level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.UNBREAKING);
+            int unbreakingLevel = EnchantmentHelper.getItemEnchantmentLevel(unbreaking, chestSlot);
             int durabilityMultiplier = 1;
 
             switch (unbreakingLevel) {
@@ -58,10 +57,10 @@ public class ElytraChecker {
 
             int durability;
             if (ChestplateWarning.considerUnbreaking) {
-                durability = ((432 - chestSlot.getDamage()) * durabilityMultiplier);
+                durability = ((432 - chestSlot.getDamageValue()) * durabilityMultiplier);
             }
             else {
-                durability = (432 - chestSlot.getDamage());
+                durability = (432 - chestSlot.getDamageValue());
             }
 
             int threshold = (int)(4.32 * ChestplateWarning.elytraDurabilityThreshold);
@@ -78,20 +77,20 @@ public class ElytraChecker {
     }
 
     public static boolean hasAdvancement(String path) {
-        MinecraftClient client = MinecraftClient.getInstance();
-        ClientPlayNetworkHandler networkHandler = client.getNetworkHandler();
+        Minecraft client = Minecraft.getInstance();
+        ClientPacketListener networkHandler = client.getConnection();
         if (client.player == null || networkHandler == null) return true;
 
-        ClientAdvancementManager advancementManager = networkHandler.getAdvancementHandler();
-        Identifier advancementId = Identifier.of(path);
-        AdvancementEntry entry = advancementManager.get(advancementId);
+        ClientAdvancements advancementManager = networkHandler.getAdvancements();
+        Identifier advancementId = Identifier.parse(path);
+        AdvancementHolder entry = advancementManager.get(advancementId);
         if (entry == null) return false;
 
         try {
-            Field field = ClientAdvancementManager.class.getDeclaredField("advancementProgresses");
+            Field field = ClientAdvancements.class.getDeclaredField("progress");
             field.setAccessible(true);
             @SuppressWarnings("unchecked")
-            Map<AdvancementEntry, AdvancementProgress> progressMap = (Map<AdvancementEntry, AdvancementProgress>) field.get(advancementManager);
+            Map<AdvancementHolder, AdvancementProgress> progressMap = (Map<AdvancementHolder, AdvancementProgress>) field.get(advancementManager);
             AdvancementProgress progress = progressMap.get(entry);
             return progress != null && progress.isDone();
         } catch (NoSuchFieldException | IllegalAccessException e) {

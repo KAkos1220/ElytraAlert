@@ -1,18 +1,18 @@
 package net.kakos1220.chestplatewarning.client;
 
 import net.kakos1220.chestplatewarning.ChestplateWarning;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gl.RenderPipelines;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.render.RenderTickCounter;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.DeltaTracker;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.resources.Identifier;
 
 public class WarningHudOverlay{
-    public static final Identifier WARNING = Identifier.of(ChestplateWarning.MOD_ID, "textures/elytraalert.png");
+    public static final Identifier WARNING = Identifier.fromNamespaceAndPath(ChestplateWarning.MOD_ID, "textures/elytraalert.png");
 
-    public static void render(DrawContext context, RenderTickCounter tickCounter) {
-        MinecraftClient client = MinecraftClient.getInstance();
-        if (client.player == null || client.options.hudHidden) {
+    public static void render(GuiGraphics context, DeltaTracker tickCounter) {
+        Minecraft client = Minecraft.getInstance();
+        if (client.player == null || client.options.hideGui) {
             return;
         }
         if (!ElytraChecker.caution) {
@@ -21,14 +21,14 @@ public class WarningHudOverlay{
 
         if (!ChestplateWarning.isModDisabled && !ChestplateWarning.isCurrentWorldDisabled && !ChestplateWarning.isCurrentServerDisabled) {
             if (ChestplateWarning.isFlashingOn){
-                int ticks = client.inGameHud.getTicks();
+                int ticks = client.gui.getGuiTicks();
                 if ((ticks / 3) % 2 == 0) {
 
-                    int screenWidth = client.getWindow().getScaledWidth();
+                    int screenWidth = client.getWindow().getGuiScaledWidth();
                     int x = screenWidth - 52;
                     int y = 10;
 
-                    context.drawTexture(
+                    context.blit(
                             RenderPipelines.GUI_TEXTURED,
                             WARNING,
                             x, y,
@@ -40,11 +40,11 @@ public class WarningHudOverlay{
                 }
             }
             else {
-                int screenWidth = client.getWindow().getScaledWidth();
+                int screenWidth = client.getWindow().getGuiScaledWidth();
                 int x = screenWidth - 52;
                 int y = 10;
 
-                context.drawTexture(
+                context.blit(
                         RenderPipelines.GUI_TEXTURED,
                         WARNING,
                         x, y,
