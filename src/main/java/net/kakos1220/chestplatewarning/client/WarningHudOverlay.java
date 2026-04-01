@@ -3,14 +3,14 @@ package net.kakos1220.chestplatewarning.client;
 import net.kakos1220.chestplatewarning.ChestplateWarning;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
 
 public class WarningHudOverlay{
     public static final Identifier WARNING = Identifier.fromNamespaceAndPath(ChestplateWarning.MOD_ID, "textures/elytraalert.png");
 
-    public static void render(GuiGraphics context, DeltaTracker tickCounter) {
+    public static void render(GuiGraphicsExtractor context, DeltaTracker tickCounter) {
         Minecraft client = Minecraft.getInstance();
         if (client.player == null || client.options.hideGui) {
             return;
