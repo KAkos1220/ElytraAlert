@@ -42,7 +42,7 @@ public class ChestplateWarningConfig implements ModMenuApi, ConfigScreenFactory<
                         Component.translatable("config.isModDisabled"), ChestplateWarning.isModDisabled
                 )
                 .setDefaultValue(false)
-                .setSaveConsumer((value) -> ChestplateWarning.isModDisabled = value)
+                .setSaveConsumer((newValue) -> ChestplateWarning.isModDisabled = newValue)
                 .build());
 
         general.addEntry(entryBuilder
@@ -50,11 +50,11 @@ public class ChestplateWarningConfig implements ModMenuApi, ConfigScreenFactory<
                         Component.translatable("config.isFlashingOn"), ChestplateWarning.isFlashingOn
                 )
                 .setDefaultValue(true)
-                .setYesNoTextSupplier(value -> value
+                .setYesNoTextSupplier(newValue -> newValue
                         ? Component.translatable("config.on").withStyle(ChatFormatting.GREEN)
                         : Component.translatable("config.off").withStyle(ChatFormatting.RED)
                 )
-                .setSaveConsumer((value) -> ChestplateWarning.isFlashingOn = value)
+                .setSaveConsumer((newValue) -> ChestplateWarning.isFlashingOn = newValue)
                 .build());
 
         general.addEntry(entryBuilder
@@ -63,11 +63,11 @@ public class ChestplateWarningConfig implements ModMenuApi, ConfigScreenFactory<
                 )
                 .setTooltip(Component.translatable("config.isDamageWarningOn.tooltip"))
                 .setDefaultValue(true)
-                .setYesNoTextSupplier(value -> value
+                .setYesNoTextSupplier(newValue -> newValue
                         ? Component.translatable("config.on").withStyle(ChatFormatting.GREEN)
                         : Component.translatable("config.off").withStyle(ChatFormatting.RED)
                 )
-                .setSaveConsumer((value) -> ChestplateWarning.isDamageWarningOn = value)
+                .setSaveConsumer((newValue) -> ChestplateWarning.isDamageWarningOn = newValue)
                 .build());
 
         general.addEntry(entryBuilder
@@ -76,8 +76,8 @@ public class ChestplateWarningConfig implements ModMenuApi, ConfigScreenFactory<
                 )
                 .setTooltip(Component.translatable("config.elytraDurabilityThreshold.tooltip"))
                 .setDefaultValue(10)
-                .setTextGetter(value -> Component.literal(value + "%"))
-                .setSaveConsumer((value) -> ChestplateWarning.elytraDurabilityThreshold = value)
+                .setTextGetter(newValue -> Component.literal(newValue + "%"))
+                .setSaveConsumer((newValue) -> ChestplateWarning.elytraDurabilityThreshold = newValue)
                 .build());
 
         general.addEntry(entryBuilder
@@ -85,11 +85,11 @@ public class ChestplateWarningConfig implements ModMenuApi, ConfigScreenFactory<
                         Component.translatable("config.considerUnbreaking"), ChestplateWarning.considerUnbreaking
                 )
                 .setDefaultValue(true)
-                .setYesNoTextSupplier(value -> value
+                .setYesNoTextSupplier(newValue -> newValue
                         ? Component.translatable("config.on").withStyle(ChatFormatting.GREEN)
                         : Component.translatable("config.off").withStyle(ChatFormatting.RED)
                 )
-                .setSaveConsumer((value) -> ChestplateWarning.considerUnbreaking = value)
+                .setSaveConsumer((newValue) -> ChestplateWarning.considerUnbreaking = newValue)
                 .build());
 
         general.addEntry(entryBuilder
@@ -98,11 +98,11 @@ public class ChestplateWarningConfig implements ModMenuApi, ConfigScreenFactory<
                 )
                 .setTooltip(Component.translatable("config.considerGameMode.tooltip"))
                 .setDefaultValue(true)
-                .setYesNoTextSupplier(value -> value
+                .setYesNoTextSupplier(newValue -> newValue
                         ? Component.translatable("config.on").withStyle(ChatFormatting.GREEN)
                         : Component.translatable("config.off").withStyle(ChatFormatting.RED)
                 )
-                .setSaveConsumer((value) -> ChestplateWarning.considerGameMode = value)
+                .setSaveConsumer((newValue) -> ChestplateWarning.considerGameMode = newValue)
                 .build());
 
         general.addEntry(entryBuilder
@@ -111,11 +111,11 @@ public class ChestplateWarningConfig implements ModMenuApi, ConfigScreenFactory<
                 )
                 .setTooltip(Component.translatable("config.considerAdvancement.tooltip"))
                 .setDefaultValue(true)
-                .setYesNoTextSupplier(value -> value
+                .setYesNoTextSupplier(newValue -> newValue
                         ? Component.translatable("config.on").withStyle(ChatFormatting.GREEN)
                         : Component.translatable("config.off").withStyle(ChatFormatting.RED)
                 )
-                .setSaveConsumer((value) -> ChestplateWarning.considerAdvancement = value)
+                .setSaveConsumer((newValue) -> ChestplateWarning.considerAdvancement = newValue)
                 .build());
 
 
@@ -132,10 +132,10 @@ public class ChestplateWarningConfig implements ModMenuApi, ConfigScreenFactory<
                     worldEntries.add(entryBuilder
                             .startBooleanToggle(Component.literal(worldName), ChestplateWarning.worldToggles.get(key))
                             .setDefaultValue(true)
-                            .setYesNoTextSupplier(value -> value
+                            .setYesNoTextSupplier(newValue -> newValue
                                     ? Component.translatable("config.on").withStyle(ChatFormatting.GREEN)
                                     : Component.translatable("config.off").withStyle(ChatFormatting.RED))
-                            .setSaveConsumer(value -> ChestplateWarning.worldToggles.put(key, value))
+                            .setSaveConsumer(newValue -> ChestplateWarning.worldToggles.put(key, newValue))
                             .build());
                 }
             }
@@ -173,10 +173,10 @@ public class ChestplateWarningConfig implements ModMenuApi, ConfigScreenFactory<
                                 .startBooleanToggle(Component.literal(name + " (" + ip + ")"),
                                         ChestplateWarning.serverToggles.get(key))
                                 .setDefaultValue(true)
-                                .setYesNoTextSupplier(value -> value
+                                .setYesNoTextSupplier(newValue -> newValue
                                         ? Component.translatable("config.on").withStyle(ChatFormatting.GREEN)
                                         : Component.translatable("config.off").withStyle(ChatFormatting.RED))
-                                .setSaveConsumer(value -> ChestplateWarning.serverToggles.put(key, value))
+                                .setSaveConsumer(newValue -> ChestplateWarning.serverToggles.put(key, newValue))
                                 .build());
                     }
                 }
