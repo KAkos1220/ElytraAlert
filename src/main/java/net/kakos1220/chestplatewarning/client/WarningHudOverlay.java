@@ -12,7 +12,7 @@ public class WarningHudOverlay{
 
     public static void render(GuiGraphicsExtractor context, DeltaTracker tickCounter) {
         Minecraft client = Minecraft.getInstance();
-        if (client.player == null || client.options.hideGui) {
+        if (client.player == null || client.gui.hud.isHidden()) {
             return;
         }
         if (!ElytraChecker.caution) {
@@ -21,7 +21,7 @@ public class WarningHudOverlay{
 
         if (!ChestplateWarning.isModDisabled && !ChestplateWarning.isCurrentWorldDisabled && !ChestplateWarning.isCurrentServerDisabled) {
             if (ChestplateWarning.isFlashingOn){
-                int ticks = client.gui.getGuiTicks();
+                int ticks = client.gui.hud.getGuiTicks();
                 if ((ticks / 3) % 2 == 0) {
 
                     int screenWidth = client.getWindow().getGuiScaledWidth();
